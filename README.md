@@ -6,9 +6,9 @@ Para justificar las distintas decisiones tomadas a lo largo del proyecto utiliza
 
 * RFI-I 
 
-  * [ADR001 - Seleccion de herramientas de configuracion](ADR/ADR01_Herramienta_gestion_configuracion.md)
-  * [ADR002 - Seleccion de metodologia de gestión](ADR/ADR02_Metodologia_gestion.md) 
-  * [ADR003 - Seleccion de herramientas de configuracion](ADR/ADR03_Herramienta_gestion_proyecto.md)
+  * [ADR001 - Selección de herramientas de configuración](ADR/ADR01_Herramienta_gestion_configuracion.md)
+  * [ADR002 - Selección de metodología de gestión](ADR/ADR02_Metodologia_gestion.md) 
+  * [ADR003 - Selección de herramientas de configuración](ADR/ADR03_Herramienta_gestion_proyecto.md)
 
 * RFI-II
 * RFI-III
