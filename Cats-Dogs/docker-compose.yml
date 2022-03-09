@@ -1,0 +1,12 @@
+version: "3"
+services:
+  cats:
+    build: ./Cats
+    ports: 
+      - "8080:80"
+  dogs:
+    build: ./Dogs
+    ports: 
+      - "8081:80"
+        
+
