@@ -8,5 +8,20 @@ services:
     build: ./Dogs
     ports: 
       - "8081:80"
-        
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cats&dogs
+      POSTGRES_USER: root
+    ports:    
+      - "5433:5432"
+    networks:
+      - default
+    restart: "always"
+    volumes:
+      - ./Database/sql/start:/docker-entrypoint-initdb.d
+      - db-catsdogs-upload-service:/var/lib/postgresql/data
 
+volumes:
+  db-catsdogs-upload-service:
