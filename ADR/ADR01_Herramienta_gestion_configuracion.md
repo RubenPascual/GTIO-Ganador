@@ -1,6 +1,6 @@
 # Definición de las Herramientas de Gestión de la Configuración
 
-* Estado: propuesta
+* Estado: aceptada
 * Responsables: Mario Azcona, Stefan Donkov, Álvaro Lerga y Rubén Pascual
 * Fecha: 2022-02-09
 
