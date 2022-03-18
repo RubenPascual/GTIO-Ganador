@@ -29,7 +29,7 @@ def _create_dog(data):
     cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
     query = "INSERT INTO dogs (name, race, file_path) VALUES (%s,%s,%s) RETURNING dog_id"
-    cursor.execute(query, (data['name'],data['race'], "gato.jpg"))
+    cursor.execute(query, (data['name'],data['race'], "perro.jpg"))
 
     id = cursor.fetchone()
     if id is not None:
@@ -44,7 +44,37 @@ def _create_dog(data):
     return {"dog_id" : id}
 
 def _update_dog(id, data):
-    return -1
+    con = connect_db()
+    cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    query = "UPDATE dogs SET name=%s, race=%s, file_path=%s WHERE dog_id=%s"
+    cursor.execute(query, (data['name'],data['race'], "perro.jpg", id))
+
+    rows_updated = cursor.rowcount
+    if rows_updated != 1:
+        con.rollback()
+
+    con.commit()
+
+    cursor.close()
+    con.close()
+    
+    return {"Rows updated" : rows_updated}
 
 def _delete_dog(id):
-    return -1
+    con = connect_db()
+    cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    query = "DELETE FROM dogs WHERE dog_id = %s"
+    cursor.execute(query, (id,))
+
+    rows_deleted = cursor.rowcount
+    if rows_deleted != 1:
+        con.rollback()
+
+    con.commit()
+
+    cursor.close()
+    con.close()
+    
+    return {"Rows deleted" : rows_deleted}

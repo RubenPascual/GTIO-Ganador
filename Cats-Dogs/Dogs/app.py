@@ -13,7 +13,7 @@ app = Flask(__name__)
 def hello():
     return "This is Dogs API version {API_VERSION}"
 
-#curl localhost:5050/dog/1
+#curl localhost:5051/dog/1
 @app.route('/{}/dog/<id>'.format(API_VERSION), methods=['GET'])
 def get_dog_by_id(id):
     data = dog_utils._get_dog_by_id(id)
@@ -23,7 +23,7 @@ def get_dog_by_id(id):
     else:
         return (Response(status=403, mimetype='application/json'))
 
-#curl -X POST -d '{ "name": "dog"}' localhost:5050/dog -H "content-type: application/json"
+#curl -X POST -d '{ "name": "dog", "race" : "raza"}' localhost:5051/dog -H "content-type: application/json"
 @app.route('/{}/dog'.format(API_VERSION), methods=['POST'])
 def create_dog():
     if request.is_json:
@@ -37,24 +37,27 @@ def create_dog():
     else:
         return (Response(status=403, mimetype='application/json'))
 
+#curl -X PUT -d '{ "name": "perro0", "race": "marrón"}' localhost:5051/v0/dog/1 -H "content-type: application/json"
 @app.route('/{}/dog/<id>'.format(API_VERSION), methods=['PUT'])
 def update_dog(id):
     if request.is_json:
         data = request.get_json()
         result = dog_utils._update_dog(id,data)
         if result != -1:
+            result = json.dumps(result)
             return (Response(result, status=200, mimetype='application/json'))
         else:
             return (Response(status=403, mimetype='application/json'))
     else:
         return (Response(status=403, mimetype='application/json'))
 
+#curl -X DELETE localhost:5051/v0/dog/1
 @app.route('/{}/dog/<id>'.format(API_VERSION), methods=['DELETE'])
 def delete_dog(id):
-
-    result = dog_utils._delete_dog(id)
+    result = dog_utils._delete_cat(id)
 
     if result != -1:
+        result = json.dumps(result)
         return (Response(result, status=200, mimetype='application/json'))
     else:
         return (Response(status=403, mimetype='application/json'))
