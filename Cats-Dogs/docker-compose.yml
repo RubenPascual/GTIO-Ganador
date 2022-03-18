@@ -1,7 +1,15 @@
 version: "3"
+
+networks:
+ kong-net:
+  driver: bridge
+
 services:
-  postgres:
-    image: postgres:latest
+  #######################################
+  # Postgres: The database used by cats & dogs
+  #######################################
+  cd-database:
+    image: postgres:14.2-alpine
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: cats&dogs
@@ -10,8 +18,88 @@ services:
       - "5433:5432"
     volumes:
       - ./Database/sql/start:/docker-entrypoint-initdb.d
-      - db-catsdogs-upload-service:/var/lib/postgresql/data
+      - cat-dog-data:/var/lib/postgresql/data
 
+  #######################################
+  # Postgres: The database used by Kong
+  #######################################
+  kong-database:
+    image: postgres:14.2-alpine
+    restart: on-failure
+    networks:
+      - kong-net
+    environment:
+      POSTGRES_PASSWORD: kong
+      POSTGRES_USER: kong
+      POSTGRES_DB: kong
+    ports:
+      - "5432:5432"
+    volumes:
+      - kong-data:/var/lib/postgresql/data
+
+  #######################################
+  # Kong database migration
+  #######################################
+  kong-migration:
+    image: kong/kong-gateway:2.8.0.0-alpine
+    command: "kong migrations bootstrap && kong migrations up && kong migrations finish"
+    networks:
+      - kong-net
+    environment:
+      KONG_PG_HOST: kong-database
+      KONG_DATABASE: postgres
+      KONG_PG_PASSWORD: kong
+    links:
+      - kong-database
+    depends_on:
+      - kong-database
+
+  #######################################
+  # Kong: The API Gateway
+  #######################################
+  kong:
+    image: kong/kong-gateway:2.8.0.0-alpine
+    restart: on-failure
+    networks:
+      - kong-net
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: kong
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+      KONG_ADMIN_GUI_URL: http://localhost:8002
+
+    depends_on:
+      - kong-migration
+      - kong-database
+    ports:
+      - "8000:8000" 
+      - "8001:8001"
+      - "8002:8002"
+      - "8003:8003"
+      - "8004:8004" 
+      - "8443:8443"
+      - "8444:8444"
+      - "8445:8445"
+  
+  #######################################
+  # Konga: Kong GUI
+  #######################################
+  konga:
+    image: pantsel/konga
+    ports:
+      - 1337:1337
+    networks:
+      - kong-net
+    links:
+      - kong:kong
+    environment:
+      - NODE_ENV=production
+
+  #######################################
+  # Flask: Cats API
+  #######################################
   cats:
     build: ./Cats
     ports: 
@@ -21,10 +109,13 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: cats&dogs
       POSTGRES_USER: root
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: cd-database
     depends_on:
-      - postgres
+      - cd-database
 
+  #######################################
+  # Flask: Dogs API
+  #######################################
   dogs:
     build: ./Dogs
     ports: 
@@ -34,9 +125,10 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: cats&dogs
       POSTGRES_USER: root
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: cd-database
     depends_on:
-      - postgres
+      - cd-database
 
 volumes:
-  db-catsdogs-upload-service:
+  kong-data:
+  cat-dog-data:
