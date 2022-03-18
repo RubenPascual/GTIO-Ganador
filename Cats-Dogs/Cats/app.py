@@ -37,24 +37,28 @@ def create_cat():
     else:
         return (Response(status=403, mimetype='application/json'))
 
+#curl -X PUT -d '{ "name": "gato0", "race": "naranja"}' localhost:5050/v0/cat/1 -H "content-type: application/json"
 @app.route('/{}/cat/<id>'.format(API_VERSION), methods=['PUT'])
 def update_cat(id):
     if request.is_json:
         data = request.get_json()
         result = cat_utils._update_cat(id,data)
         if result != -1:
+            result = json.dumps(result)
             return (Response(result, status=200, mimetype='application/json'))
         else:
             return (Response(status=403, mimetype='application/json'))
     else:
         return (Response(status=403, mimetype='application/json'))
 
+
+#curl -X DELETE localhost:5050/v0/cat/1
 @app.route('/{}/cat/<id>'.format(API_VERSION), methods=['DELETE'])
 def delete_cat(id):
-
     result = cat_utils._delete_cat(id)
 
     if result != -1:
+        result = json.dumps(result)
         return (Response(result, status=200, mimetype='application/json'))
     else:
         return (Response(status=403, mimetype='application/json'))

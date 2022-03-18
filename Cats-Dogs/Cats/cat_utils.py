@@ -44,7 +44,37 @@ def _create_cat(data):
     return {"cat_id" : id}
 
 def _update_cat(id, data):
-    return -1
+    con = connect_db()
+    cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    query = "UPDATE cats SET name=%s, race=%s, file_path=%s WHERE cat_id=%s"
+    cursor.execute(query, (data['name'],data['race'], "gato.jpg", id))
+
+    rows_updated = cursor.rowcount
+    if rows_updated != 1:
+        con.rollback()
+
+    con.commit()
+
+    cursor.close()
+    con.close()
+    
+    return {"Rows updated" : rows_updated}
 
 def _delete_cat(id):
-    return -1
+    con = connect_db()
+    cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    query = "DELETE FROM cats WHERE cat_id = %s"
+    cursor.execute(query, (id,))
+
+    rows_deleted = cursor.rowcount
+    if rows_deleted != 1:
+        con.rollback()
+
+    con.commit()
+
+    cursor.close()
+    con.close()
+    
+    return {"Rows deleted" : rows_deleted}
