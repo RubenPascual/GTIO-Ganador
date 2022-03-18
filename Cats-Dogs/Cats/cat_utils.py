@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import psycopg2.extras
 
 DB_HOST = os.getenv("POSTGRES_HOST")
 DB_NAME = os.getenv("POSTGRES_DB")
@@ -11,23 +12,39 @@ def connect_db():
     return con
 
 def _get_cat_by_id(id):
-    name = "Cat " + id
-    data = {"name" : name}
-    success = 1
-    return success,data
+    con = connect_db()
+    cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    query = "SELECT * FROM cats WHERE cat_id = %s"
+    cursor.execute(query, (id,))
+    data = cursor.fetchone()
+
+    cursor.close()
+    con.close()
+
+    return data
 
 def _create_cat(data):
     con = connect_db()
-    cursor = con.cursor()
+    cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-    query = "INSERT INTO cats (name, race, file_path) VALUES (\'{}\',\'{}\',\'gato.jpg\')".format(data['name'],data['race'])
-    cursor.execute(query)
+    query = "INSERT INTO cats (name, race, file_path) VALUES (%s,%s,%s) RETURNING cat_id"
+    cursor.execute(query, (data['name'],data['race'], "gato.jpg"))
+
+    id = cursor.fetchone()
+    if id is not None:
+        id = id["cat_id"]
+    else:
+        id = -1
+
     con.commit()
 
-    return 1
+    cursor.close()
+    con.close()
+    return {"cat_id" : id}
 
 def _update_cat(id, data):
-    return
+    return -1
 
 def _delete_cat(id):
-    return
+    return -1
