@@ -1,0 +1,242 @@
+{
+	"info": {
+		"_postman_id": "6131adf4-fbcc-40bc-b024-6798f15fa8b4",
+		"name": "cats&dogs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST localhost:5050/v0/cat/2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "gato",
+							"contentType": "",
+							"type": "text"
+						},
+						{
+							"key": "race",
+							"value": "raza",
+							"type": "default"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/alumno/Descargas/gatobaila.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5050/v0/cat",
+					"host": [
+						"localhost"
+					],
+					"port": "5050",
+					"path": [
+						"v0",
+						"cat"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "gato_test",
+							"disabled": true
+						},
+						{
+							"key": "race",
+							"value": "raza",
+							"disabled": true
+						},
+						{
+							"key": "file",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET localhost:5050/v0/cat/2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "gato",
+							"contentType": "",
+							"type": "text"
+						},
+						{
+							"key": "race",
+							"value": "raza",
+							"type": "default"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/alumno/Descargas/gatobaila.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5050/v0/cat/68",
+					"host": [
+						"localhost"
+					],
+					"port": "5050",
+					"path": [
+						"v0",
+						"cat",
+						"68"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "gato_test",
+							"disabled": true
+						},
+						{
+							"key": "race",
+							"value": "raza",
+							"disabled": true
+						},
+						{
+							"key": "file",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE localhost:5050/v0/cat/2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "gato",
+							"contentType": "",
+							"type": "text"
+						},
+						{
+							"key": "race",
+							"value": "raza",
+							"type": "default"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/alumno/Descargas/gatobaila.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5050/v0/cat/35",
+					"host": [
+						"localhost"
+					],
+					"port": "5050",
+					"path": [
+						"v0",
+						"cat",
+						"35"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "gato_test",
+							"disabled": true
+						},
+						{
+							"key": "race",
+							"value": "raza",
+							"disabled": true
+						},
+						{
+							"key": "file",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT localhost:5050/v0/cat/2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "gato bailando",
+							"contentType": "",
+							"type": "text"
+						},
+						{
+							"key": "race",
+							"value": "meme",
+							"type": "default"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/alumno/Descargas/gatobaila.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5050/v0/cat",
+					"host": [
+						"localhost"
+					],
+					"port": "5050",
+					"path": [
+						"v0",
+						"cat"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "gato_test",
+							"disabled": true
+						},
+						{
+							"key": "race",
+							"value": "raza",
+							"disabled": true
+						},
+						{
+							"key": "file",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
