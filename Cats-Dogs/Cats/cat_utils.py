@@ -48,7 +48,7 @@ def _update_cat(id, data):
     cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
     query = "UPDATE cats SET name=%s, race=%s, file_path=%s WHERE cat_id=%s"
-    cursor.execute(query, (data['name'],data['race'], "gato.jpg", id))
+    cursor.execute(query, (data['name'],data['race'], data['path'], id))
 
     rows_updated = cursor.rowcount
     if rows_updated != 1:
@@ -62,6 +62,8 @@ def _update_cat(id, data):
     return {"Rows updated" : rows_updated}
 
 def _delete_cat(id):
+    image_path = _get_cat_by_id(id)["file_path"]
+
     con = connect_db()
     cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
@@ -77,4 +79,4 @@ def _delete_cat(id):
     cursor.close()
     con.close()
     
-    return {"Rows deleted" : rows_deleted}
+    return {"Rows deleted" : rows_deleted}, image_path

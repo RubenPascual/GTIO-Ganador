@@ -5,8 +5,6 @@ RUN apt-get update -y && \
 
 COPY ./requirements.txt /app/requirements.txt
 
-ARG UPLOAD_PATH
-
 RUN mkdir /app/images
 
 WORKDIR /app
