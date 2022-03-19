@@ -29,7 +29,7 @@ def _create_dog(data):
     cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
     query = "INSERT INTO dogs (name, race, file_path) VALUES (%s,%s,%s) RETURNING dog_id"
-    cursor.execute(query, (data['name'],data['race'], "perro.jpg"))
+    cursor.execute(query, (data['name'],data['race'],data['path']))
 
     id = cursor.fetchone()
     if id is not None:
@@ -48,7 +48,7 @@ def _update_dog(id, data):
     cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
     query = "UPDATE dogs SET name=%s, race=%s, file_path=%s WHERE dog_id=%s"
-    cursor.execute(query, (data['name'],data['race'], "perro.jpg", id))
+    cursor.execute(query, (data['name'],data['race'], data['path'], id))
 
     rows_updated = cursor.rowcount
     if rows_updated != 1:
@@ -62,6 +62,8 @@ def _update_dog(id, data):
     return {"Rows updated" : rows_updated}
 
 def _delete_dog(id):
+    image_path = _get_dog_by_id(id)["file_path"]
+
     con = connect_db()
     cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
@@ -77,4 +79,4 @@ def _delete_dog(id):
     cursor.close()
     con.close()
     
-    return {"Rows deleted" : rows_deleted}
+    return {"Rows deleted" : rows_deleted}, image_path

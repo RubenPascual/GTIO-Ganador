@@ -107,13 +107,15 @@ services:
       - "5050:5000"
     environment:
       API_VERSION: v0
-      UPLOAD_FOLDER: /app/images
+      UPLOAD_FOLDER: images
       POSTGRES_PASSWORD: password
       POSTGRES_DB: cats&dogs
       POSTGRES_USER: root
       POSTGRES_HOST: cd-database
     depends_on:
       - cd-database
+    volumes:
+      - ./cat-images:/app/images
     
 
   #######################################
@@ -125,12 +127,15 @@ services:
       - "5051:5000"
     environment:
       API_VERSION: v0
+      UPLOAD_FOLDER: images
       POSTGRES_PASSWORD: password
       POSTGRES_DB: cats&dogs
       POSTGRES_USER: root
       POSTGRES_HOST: cd-database
     depends_on:
       - cd-database
+    volumes:
+      - ./dog-images:/app/images
 
 volumes:
   kong-data:
