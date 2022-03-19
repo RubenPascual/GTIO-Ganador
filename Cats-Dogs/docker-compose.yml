@@ -101,17 +101,20 @@ services:
   # Flask: Cats API
   #######################################
   cats:
-    build: ./Cats
+    build:
+      context: ./Cats
     ports: 
       - "5050:5000"
     environment:
       API_VERSION: v0
+      UPLOAD_FOLDER: /app/images
       POSTGRES_PASSWORD: password
       POSTGRES_DB: cats&dogs
       POSTGRES_USER: root
       POSTGRES_HOST: cd-database
     depends_on:
       - cd-database
+    
 
   #######################################
   # Flask: Dogs API

@@ -29,7 +29,7 @@ def _create_cat(data):
     cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
     query = "INSERT INTO cats (name, race, file_path) VALUES (%s,%s,%s) RETURNING cat_id"
-    cursor.execute(query, (data['name'],data['race'], "gato.jpg"))
+    cursor.execute(query, (data['name'],data['race'],data['path']))
 
     id = cursor.fetchone()
     if id is not None:
