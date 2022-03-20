@@ -35,6 +35,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
+      - ./Database/sql/kong_start:/docker-entrypoint-initdb.d
       - kong-database:/var/lib/postgresql/data
 
   #######################################
