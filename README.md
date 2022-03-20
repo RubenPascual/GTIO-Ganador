@@ -11,5 +11,9 @@ Para justificar las distintas decisiones tomadas a lo largo del proyecto utiliza
   * [ADR003 - Selección de herramientas de configuración](ADR/ADR03_Herramienta_gestion_proyecto.md)
 
 * RFI-II
+
+  * [ADR004 - Selección de framework para realizar las APIs Cats&Dogs](ADR/ADR04_Story3_API_Framework.md)
+  * [ADR005 - Selección BBDD para almacenar info Cats&Dogs](ADR/ADR05_Seleccion_BBDD.md) 
+
 * RFI-III
 * 

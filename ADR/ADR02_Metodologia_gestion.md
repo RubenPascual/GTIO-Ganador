@@ -1,6 +1,6 @@
 # Definición de la Metodología de Gestión
 
-* Estado: propuesta
+* Estado: aceptada
 * Responsables: Mario Azcona, Stefan Donkov, Álvaro Lerga y Rubén Pascual
 * Fecha: 2022-02-18
 
