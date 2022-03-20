@@ -50,7 +50,7 @@
         },
         "active": true,
         "createdAt": "2022-03-20T13:48:36.916Z",
-        "updatedAt": "2022-03-20T13:50:15.912Z",
+        "updatedAt": "2022-03-20T14:04:21.550Z",
         "createdUserId": null,
         "updatedUserId": null,
         "id": 1
@@ -63,7 +63,7 @@
         },
         "active": false,
         "createdAt": "2022-03-20T13:48:36.919Z",
-        "updatedAt": "2022-03-20T13:50:15.921Z",
+        "updatedAt": "2022-03-20T14:04:21.602Z",
         "createdUserId": null,
         "updatedUserId": null,
         "id": 2
@@ -95,7 +95,7 @@
         },
         "active": false,
         "createdAt": "2022-03-20T13:48:36.920Z",
-        "updatedAt": "2022-03-20T13:50:15.926Z",
+        "updatedAt": "2022-03-20T14:04:21.608Z",
         "createdUserId": null,
         "updatedUserId": null,
         "id": 3
@@ -232,7 +232,7 @@
           }
         },
         "createdAt": "2022-03-20T13:48:36.930Z",
-        "updatedAt": "2022-03-20T13:50:15.938Z",
+        "updatedAt": "2022-03-20T14:04:21.624Z",
         "createdUserId": null,
         "updatedUserId": null,
         "id": 1

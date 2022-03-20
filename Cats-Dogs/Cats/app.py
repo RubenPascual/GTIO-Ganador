@@ -5,7 +5,6 @@ import os
 import uuid
 import base64
 
-API_VERSION = os.getenv('API_VERSION')
 ALLOWED_EXTENSIONS = set(['png'])
 
 app = Flask(__name__)

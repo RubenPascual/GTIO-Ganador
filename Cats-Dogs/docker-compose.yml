@@ -9,7 +9,7 @@ services:
   # Postgres: The database used by cats & dogs
   #######################################
   cd-database:
-    image: postgres:9.6-alpine
+    image: postgres:14.2-alpine
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: cats&dogs
@@ -24,7 +24,7 @@ services:
   # Postgres: The database used by Kong
   #######################################
   kong-database:
-    image: postgres:9.6-alpine
+    image: postgres:14.2-alpine
     restart: on-failure
     networks:
       - kong-net
