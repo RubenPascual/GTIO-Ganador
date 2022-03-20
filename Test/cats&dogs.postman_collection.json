@@ -1,242 +1,967 @@
 {
 	"info": {
-		"_postman_id": "6131adf4-fbcc-40bc-b024-6798f15fa8b4",
+		"_postman_id": "3205e6e6-d964-4a6d-99ec-11b4a9a24964",
 		"name": "cats&dogs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "POST localhost:5050/v0/cat/2",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
+			"name": "Direct",
+			"item": [
+				{
+					"name": "Dogs",
+					"item": [
 						{
-							"key": "name",
-							"value": "gato",
-							"contentType": "",
-							"type": "text"
+							"name": "Crear perro",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "dogo",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Escritorio/GTIO-Ganador/Test/images/test_dog.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5051/v0/dog",
+									"host": [
+										"localhost"
+									],
+									"port": "5051",
+									"path": [
+										"v0",
+										"dog"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "race",
-							"value": "raza",
-							"type": "default"
+							"name": "Consultar perro",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Descargas/gatobaila.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5051/v0/dog/2",
+									"host": [
+										"localhost"
+									],
+									"port": "5051",
+									"path": [
+										"v0",
+										"dog",
+										"2"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "file",
-							"type": "file",
-							"src": "/home/alumno/Descargas/gatobaila.png"
+							"name": "Actualizar perro",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "perro bailando",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "meme",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Escritorio/GTIO-Ganador/Test/images/test_dog.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5051/v0/dog/1",
+									"host": [
+										"localhost"
+									],
+									"port": "5051",
+									"path": [
+										"v0",
+										"dog",
+										"1"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar perro",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Descargas/gatobaila.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5051/v0/dog/1",
+									"host": [
+										"localhost"
+									],
+									"port": "5051",
+									"path": [
+										"v0",
+										"dog",
+										"1"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
-				"url": {
-					"raw": "localhost:5050/v0/cat",
-					"host": [
-						"localhost"
-					],
-					"port": "5050",
-					"path": [
-						"v0",
-						"cat"
-					],
-					"query": [
+				{
+					"name": "Cats",
+					"item": [
 						{
-							"key": "name",
-							"value": "gato_test",
-							"disabled": true
+							"name": "Crear gato",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Escritorio/GTIO-Ganador/Test/images/test_cat.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5050/v0/cat",
+									"host": [
+										"localhost"
+									],
+									"port": "5050",
+									"path": [
+										"v0",
+										"cat"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "race",
-							"value": "raza",
-							"disabled": true
+							"name": "Eliminar gato",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Descargas/gatobaila.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5050/v0/cat/1",
+									"host": [
+										"localhost"
+									],
+									"port": "5050",
+									"path": [
+										"v0",
+										"cat",
+										"1"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "file",
-							"value": null,
-							"disabled": true
+							"name": "Actualizar gato",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato bailando",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "meme",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Escritorio/GTIO-Ganador/Test/images/test_cat.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5050/v0/cat/2",
+									"host": [
+										"localhost"
+									],
+									"port": "5050",
+									"path": [
+										"v0",
+										"cat",
+										"2"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar gato",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Descargas/gatobaila.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5050/v0/cat/2",
+									"host": [
+										"localhost"
+									],
+									"port": "5050",
+									"path": [
+										"v0",
+										"cat",
+										"2"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "GET localhost:5050/v0/cat/2",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
+			"name": "Gateway",
+			"item": [
+				{
+					"name": "Cats",
+					"item": [
 						{
-							"key": "name",
-							"value": "gato",
-							"contentType": "",
-							"type": "text"
+							"name": "Crear gato",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Escritorio/GTIO-Ganador/Test/images/test_cat.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8000/cat",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"cat"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "race",
-							"value": "raza",
-							"type": "default"
+							"name": "Eliminar gato",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Descargas/gatobaila.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8000/cat/69",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"cat",
+										"69"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "file",
-							"type": "file",
-							"src": "/home/alumno/Descargas/gatobaila.png"
+							"name": "Actualizar gato",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato bailando",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "meme",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Escritorio/GTIO-Ganador/Test/images/test_cat.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8000/cat/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"cat",
+										"2"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar gato",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Descargas/gatobaila.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8000/cat/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"cat",
+										"2"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
-				"url": {
-					"raw": "localhost:5050/v0/cat/68",
-					"host": [
-						"localhost"
-					],
-					"port": "5050",
-					"path": [
-						"v0",
-						"cat",
-						"68"
-					],
-					"query": [
+				{
+					"name": "Dogs",
+					"item": [
 						{
-							"key": "name",
-							"value": "gato_test",
-							"disabled": true
+							"name": "Crear perro",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "dogo",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Escritorio/GTIO-Ganador/Test/images/test_dog.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8000/dog",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"dog"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "race",
-							"value": "raza",
-							"disabled": true
+							"name": "Consultar perro",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Descargas/gatobaila.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8000/dog/3",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"dog",
+										"3"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "file",
-							"value": null,
-							"disabled": true
+							"name": "Actualizar perro",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "perro bailando",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "meme",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Escritorio/GTIO-Ganador/Test/images/test_dog.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8000/dog/3",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"dog",
+										"3"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar perro",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "gato",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"type": "default"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/alumno/Descargas/gatobaila.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8000/dog/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"dog",
+										"2"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "gato_test",
+											"disabled": true
+										},
+										{
+											"key": "race",
+											"value": "raza",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "DELETE localhost:5050/v0/cat/2",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "name",
-							"value": "gato",
-							"contentType": "",
-							"type": "text"
-						},
-						{
-							"key": "race",
-							"value": "raza",
-							"type": "default"
-						},
-						{
-							"key": "file",
-							"type": "file",
-							"src": "/home/alumno/Descargas/gatobaila.png"
-						}
-					]
-				},
-				"url": {
-					"raw": "localhost:5050/v0/cat/35",
-					"host": [
-						"localhost"
-					],
-					"port": "5050",
-					"path": [
-						"v0",
-						"cat",
-						"35"
-					],
-					"query": [
-						{
-							"key": "name",
-							"value": "gato_test",
-							"disabled": true
-						},
-						{
-							"key": "race",
-							"value": "raza",
-							"disabled": true
-						},
-						{
-							"key": "file",
-							"value": null,
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "PUT localhost:5050/v0/cat/2",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "name",
-							"value": "gato bailando",
-							"contentType": "",
-							"type": "text"
-						},
-						{
-							"key": "race",
-							"value": "meme",
-							"type": "default"
-						},
-						{
-							"key": "file",
-							"type": "file",
-							"src": "/home/alumno/Descargas/gatobaila.png"
-						}
-					]
-				},
-				"url": {
-					"raw": "localhost:5050/v0/cat",
-					"host": [
-						"localhost"
-					],
-					"port": "5050",
-					"path": [
-						"v0",
-						"cat"
-					],
-					"query": [
-						{
-							"key": "name",
-							"value": "gato_test",
-							"disabled": true
-						},
-						{
-							"key": "race",
-							"value": "raza",
-							"disabled": true
-						},
-						{
-							"key": "file",
-							"value": null,
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }
