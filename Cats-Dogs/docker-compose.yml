@@ -35,7 +35,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./Database/gateway-kong-database:/var/lib/postgresql/data
+      - kong-database:/var/lib/postgresql/data
 
   #######################################
   # Kong database migration
@@ -139,4 +139,5 @@ services:
       - ./Dogs/.dog-images:/app/images
 
 volumes:
+  kong-database:
   cat-dog-database:
