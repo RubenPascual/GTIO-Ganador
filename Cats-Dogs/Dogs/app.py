@@ -5,18 +5,17 @@ import os
 import uuid
 import base64
 
-API_VERSION = os.getenv('API_VERSION')
 ALLOWED_EXTENSIONS = set(['png'])
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER')
 
-@app.route('/{}/'.format(API_VERSION))
+@app.route('/v0/')
 def hello():
-    return 'This is Dogs API version {}'.format(API_VERSION)
+    return 'This is Dogs API version v0'
 
 #curl localhost:5050/dog/1
-@app.route('/{}/dog/<id>'.format(API_VERSION), methods=['GET'])
+@app.route('/v0/dog/<id>', methods=['GET'])
 def get_dog_by_id(id):
 
     data = dog_utils._get_dog_by_id(id)
@@ -39,7 +38,7 @@ def get_dog_by_id(id):
         return (Response(status=403, mimetype='application/json'))
 
 #curl -X POST -d '{ "name": "dog", "race" : "raza"}' localhost:5050/dog -H "content-type: application/json"
-@app.route('/{}/dog'.format(API_VERSION), methods=['POST'])
+@app.route('/v0/dog', methods=['POST'])
 def create_dog():
     #Extract data from the request
     name = request.form.get("name")
@@ -71,7 +70,7 @@ def create_dog():
 
 
 #curl -X PUT -d '{ "name": "perro0", "race": "naranja"}' localhost:5050/v0/dog/1 -H "content-type: application/json"
-@app.route('/{}/dog/<id>'.format(API_VERSION), methods=['PUT'])
+@app.route('/v0/dog/<id>', methods=['PUT'])
 def update_dog(id):
     #Extract data from the request
     name = request.form.get("name")
@@ -111,7 +110,7 @@ def update_dog(id):
 
 
 #curl -X DELETE localhost:5050/v0/dog/1
-@app.route('/{}/dog/<id>'.format(API_VERSION), methods=['DELETE'])
+@app.route('/v0/dog/<id>', methods=['DELETE'])
 def delete_dog(id):
     #Delete the data from the database and delete the file
     result, image_path = dog_utils._delete_dog(id)
