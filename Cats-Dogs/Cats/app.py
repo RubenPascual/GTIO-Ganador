@@ -11,12 +11,12 @@ ALLOWED_EXTENSIONS = set(['png'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER')
 
-@app.route('/{}/'.format(API_VERSION))
+@app.route('/v0/')
 def hello():
-    return 'This is Cats API version {}'.format(API_VERSION)
+    return 'This is Cats API version v0'
 
 #curl localhost:5050/cat/1
-@app.route('/{}/cat/<id>'.format(API_VERSION), methods=['GET'])
+@app.route('/v0/cat/<id>', methods=['GET'])
 def get_cat_by_id(id):
 
     data = cat_utils._get_cat_by_id(id)
@@ -39,7 +39,7 @@ def get_cat_by_id(id):
         return (Response(status=403, mimetype='application/json'))
 
 #curl -X POST -d '{ "name": "cat", "race" : "raza"}' localhost:5050/cat -H "content-type: application/json"
-@app.route('/{}/cat'.format(API_VERSION), methods=['POST'])
+@app.route('/v0/cat', methods=['POST'])
 def create_cat():
     #Extract data from the request
     name = request.form.get("name")
@@ -71,7 +71,7 @@ def create_cat():
 
 
 #curl -X PUT -d '{ "name": "gato0", "race": "naranja"}' localhost:5050/v0/cat/1 -H "content-type: application/json"
-@app.route('/{}/cat/<id>'.format(API_VERSION), methods=['PUT'])
+@app.route('/v0/cat/<id>', methods=['PUT'])
 def update_cat(id):
     #Extract data from the request
     name = request.form.get("name")
@@ -111,7 +111,7 @@ def update_cat(id):
 
 
 #curl -X DELETE localhost:5050/v0/cat/1
-@app.route('/{}/cat/<id>'.format(API_VERSION), methods=['DELETE'])
+@app.route('/v0/cat/<id>', methods=['DELETE'])
 def delete_cat(id):
     #Delete the data from the database and delete the file
     result, image_path = cat_utils._delete_cat(id)
