@@ -35,7 +35,8 @@ def get_dog_by_id(id):
         response = json.dumps(response)
         return (Response(response, status=200, mimetype='application/json'))
     else:
-        return (Response(status=403, mimetype='application/json'))
+        #Error dog <id> not in DB
+        return (Response(json.dumps({"error" : "Dog {} not database".format(id)}),status=404, mimetype='application/json'))
 
 #curl -X POST -d '{ "name": "dog", "race" : "raza"}' localhost:5050/dog -H "content-type: application/json"
 @app.route('/v0/dog', methods=['POST'])
@@ -46,7 +47,8 @@ def create_dog():
 
     #Check if the request has the file
     if 'file' not in request.files:
-        return (Response(status=403, mimetype='application/json'))
+        #Error the request must have a file
+        return (Response(json.dumps({"error" : "Request must contain a file"}),status=400, mimetype='application/json'))
     file = request.files['file']
 
     #Upload the image and retrieve the path
@@ -55,10 +57,16 @@ def create_dog():
     #Check if the file was upladed succesfully and insert the data in the DB
     data = "{\"name\" : \"" + name + "\", \"race\": \"" + race + "\"}"
     data = json.loads(data)
-    if path != -1 and path != -2:
+    if path != -1 and path != -2 and path != -3:
         data["path"] = path
     else:
-        return (Response(status=403, mimetype='application/json'))
+        #Error uploading file
+        if path == -1:
+            return (Response(json.dumps({"error" : "Request must contain a file"}),status=400, mimetype='application/json'))
+        elif path == -2:
+            return (Response(json.dumps({"error" : "File format not supported"}),status=400, mimetype='application/json'))
+        elif path == -3:
+            return (Response(json.dumps({"error" : "Unexpected error"}),status=500, mimetype='application/json'))
     result = dog_utils._create_dog(data)
 
     #Check the result and return response
@@ -66,10 +74,11 @@ def create_dog():
         result = json.dumps(result)
         return (Response(result, status=200, mimetype='application/json'))
     else:
-        return (Response(status=403, mimetype='application/json'))
+        #Error inserting dog in DB
+        return (Response(json.dumps({"error" : "Error inserting dog in database"}),status=500, mimetype='application/json'))
 
 
-#curl -X PUT -d '{ "name": "perro0", "race": "naranja"}' localhost:5050/v0/dog/1 -H "content-type: application/json"
+#curl -X PUT -d '{ "name": "gato0", "race": "naranja"}' localhost:5050/v0/dog/1 -H "content-type: application/json"
 @app.route('/v0/dog/<id>', methods=['PUT'])
 def update_dog(id):
     #Extract data from the request
@@ -78,7 +87,8 @@ def update_dog(id):
 
     #Check if the request has the file
     if 'file' not in request.files:
-        return (Response(status=403, mimetype='application/json'))
+        #Error the request must have a file
+        return (Response(json.dumps({"error" : "Request must contain a file"}),status=400, mimetype='application/json'))
     file = request.files['file']
 
     #Upload the new image and retrieve the path
@@ -87,10 +97,16 @@ def update_dog(id):
     #Check if the file was upladed succesfully and update the data
     data = "{\"name\" : \"" + name + "\", \"race\": \"" + race + "\"}"
     data = json.loads(data)
-    if path != -1 and path != -2:
+    if path != -1 and path != -2 and path != -3:
         data["path"] = path
     else:
-        return (Response(status=403, mimetype='application/json'))
+        #Error uploading file
+        if path == -1:
+            return (Response(json.dumps({"error" : "Request must contain a file"}),status=400, mimetype='application/json'))
+        elif path == -2:
+            return (Response(json.dumps({"error" : "File format not supported"}),status=400, mimetype='application/json'))
+        elif path == -3:
+            return (Response(json.dumps({"error" : "Unexpected error"}),status=500, mimetype='application/json'))
 
     #Retrieve the previous path and delete the file
     previous_path = dog_utils._get_dog_by_id(id)["file_path"]
@@ -105,7 +121,8 @@ def update_dog(id):
         result = json.dumps(result)
         return (Response(result, status=200, mimetype='application/json'))
     else:
-        return (Response(status=403, mimetype='application/json'))
+        #Error inserting dog in DB
+        return (Response(json.dumps({"error" : "Error inserting dog in database"}),status=500, mimetype='application/json'))
 
 
 
@@ -124,7 +141,8 @@ def delete_dog(id):
         result = json.dumps(result)
         return (Response(result, status=200, mimetype='application/json'))
     else:
-        return (Response(status=403, mimetype='application/json'))
+        #Error inserting dog in DB
+        return (Response(json.dumps({"error" : "Error inserting dog in database"}),status=500, mimetype='application/json'))
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -134,11 +152,16 @@ def upload_file(file):
     if file.filename == '':
         return -1
 
+    if not allowed_file(file.filename):
+        return -2
+
     #Check file format and upload
-    if file and allowed_file(file.filename):
+    if file:
         filename = uuid.uuid4().hex + "." + file.filename.rsplit('.', 1)[1].lower()
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return filename
+    else:
+        return -3
 
 def download_file(filename):
     #Read file as binary and encode
