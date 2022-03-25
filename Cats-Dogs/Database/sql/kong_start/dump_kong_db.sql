@@ -154,41 +154,79 @@ CREATE FUNCTION public.sync_tags() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 
+
+
         BEGIN
+
+
 
           IF (TG_OP = 'TRUNCATE') THEN
 
+
+
             DELETE FROM tags WHERE entity_name = TG_TABLE_NAME;
+
+
 
             RETURN NULL;
 
+
+
           ELSIF (TG_OP = 'DELETE') THEN
+
+
 
             DELETE FROM tags WHERE entity_id = OLD.id;
 
+
+
             RETURN OLD;
+
+
 
           ELSE
 
 
 
+
+
+
+
           -- Triggered by INSERT/UPDATE
+
+
 
           -- Do an upsert on the tags table
 
+
+
           -- So we don't need to migrate pre 1.1 entities
+
+
 
           INSERT INTO tags VALUES (NEW.id, TG_TABLE_NAME, NEW.tags)
 
+
+
           ON CONFLICT (entity_id) DO UPDATE
+
+
 
                   SET tags=EXCLUDED.tags;
 
+
+
           END IF;
+
+
 
           RETURN NEW;
 
+
+
         END;
+
+
 
       $$;
 
@@ -1633,6 +1671,12 @@ COPY public.certificates (id, created_at, cert, key, tags, ws_id, cert_alt, key_
 --
 
 COPY public.cluster_events (id, node_id, at, nbf, expire_at, channel, data) FROM stdin;
+25ad878b-6d5e-431a-8497-a3f0f5124976	d02e1099-ab29-43ca-a338-bfdcfa52d6a5	2022-03-25 18:28:56.566+00	\N	2022-03-25 19:28:56.566+00	invalidations	routes:8ebb282d-351b-4201-982f-3d5a134d001a:::::3c4ca33f-a242-4d4e-9be7-74b1f2baa013
+f9b04ee0-8463-43df-a829-ee63ab29c05f	d02e1099-ab29-43ca-a338-bfdcfa52d6a5	2022-03-25 18:28:56.57+00	\N	2022-03-25 19:28:56.57+00	invalidations	router:version
+5b531cec-07da-43b0-a7bf-425e868f3691	d02e1099-ab29-43ca-a338-bfdcfa52d6a5	2022-03-25 18:28:56.579+00	\N	2022-03-25 19:28:56.579+00	invalidations	mtls-auth:cert_enabled_snis
+543bdd40-6313-4bfa-88b4-b29d11f34778	d02e1099-ab29-43ca-a338-bfdcfa52d6a5	2022-03-25 18:29:13.22+00	\N	2022-03-25 19:29:13.22+00	invalidations	routes:119ed191-30b9-49dc-a3f2-be17a8d69b92:::::3c4ca33f-a242-4d4e-9be7-74b1f2baa013
+be67fd74-c91d-4d2c-896d-55ed207fc0e4	d02e1099-ab29-43ca-a338-bfdcfa52d6a5	2022-03-25 18:29:13.223+00	\N	2022-03-25 19:29:13.223+00	invalidations	router:version
+c9cee29b-2540-4864-8f3c-6ce33541d1e6	d02e1099-ab29-43ca-a338-bfdcfa52d6a5	2022-03-25 18:29:13.226+00	\N	2022-03-25 19:29:13.226+00	invalidations	mtls-auth:cert_enabled_snis
 \.
 
 
@@ -1832,6 +1876,9 @@ fa1c34cc-d582-4777-9d8a-14564f1e1145	1	2017-07-20 00:00:00	2022	3
 30d2e218-dac5-4900-9cc7-f09dc8e1c05b	1	2017-07-20 00:00:00	2022	3
 b031de2b-5e3a-481f-a982-0ce45ecf6a06	1	2017-07-20 00:00:00	2022	3
 b110fabb-9295-4b82-90bb-03abff72718d	0	2017-07-20 00:00:00	2022	3
+38631695-623f-44bf-906e-ccc61fafbcd7	3	2017-07-20 00:00:00	2022	3
+754f270f-eb9d-4099-8422-870feb5bd116	0	2017-07-20 00:00:00	2022	3
+d02e1099-ab29-43ca-a338-bfdcfa52d6a5	9	2017-07-20 00:00:00	2022	3
 \.
 
 
@@ -2010,8 +2057,8 @@ COPY public.rl_counters (key, namespace, window_start, window_size, count) FROM 
 --
 
 COPY public.routes (id, created_at, updated_at, name, service_id, protocols, methods, hosts, paths, snis, sources, destinations, regex_priority, strip_path, preserve_host, tags, https_redirect_status_code, headers, path_handling, ws_id, request_buffering, response_buffering) FROM stdin;
-119ed191-30b9-49dc-a3f2-be17a8d69b92	2022-03-20 17:55:58+00	2022-03-20 17:56:16+00	v0-Cats	8345bcf4-f363-4068-ad1e-3469b46dfff2	{http}	\N	\N	{/cat}	\N	\N	\N	0	t	f	\N	426	\N	v0	3c4ca33f-a242-4d4e-9be7-74b1f2baa013	t	t
-8ebb282d-351b-4201-982f-3d5a134d001a	2022-03-20 17:58:15+00	2022-03-20 17:58:15+00	v0-Dog	f2203024-43cb-4c0c-a1ad-c6c913ecbae7	{http}	\N	\N	{/dog}	\N	\N	\N	0	t	f	\N	426	\N	v0	3c4ca33f-a242-4d4e-9be7-74b1f2baa013	t	t
+8ebb282d-351b-4201-982f-3d5a134d001a	2022-03-20 17:58:15+00	2022-03-25 18:28:56+00	v0-Dog	f2203024-43cb-4c0c-a1ad-c6c913ecbae7	{http}	\N	\N	{/dog/v0}	\N	\N	\N	0	t	f	\N	426	\N	v0	3c4ca33f-a242-4d4e-9be7-74b1f2baa013	t	t
+119ed191-30b9-49dc-a3f2-be17a8d69b92	2022-03-20 17:55:58+00	2022-03-25 18:29:13+00	v0-Cats	8345bcf4-f363-4068-ad1e-3469b46dfff2	{http}	\N	\N	{/cat/v0}	\N	\N	\N	0	t	f	\N	426	\N	v0	3c4ca33f-a242-4d4e-9be7-74b1f2baa013	t	t
 \.
 
 
@@ -2088,9 +2135,7 @@ COPY public.snis (id, created_at, name, certificate_id, tags, ws_id) FROM stdin;
 
 COPY public.tags (entity_id, entity_name, tags) FROM stdin;
 8345bcf4-f363-4068-ad1e-3469b46dfff2	services	{}
-119ed191-30b9-49dc-a3f2-be17a8d69b92	routes	\N
 f2203024-43cb-4c0c-a1ad-c6c913ecbae7	services	{}
-8ebb282d-351b-4201-982f-3d5a134d001a	routes	\N
 0563cc6d-f85a-45dc-9676-5bc59efddc99	plugins	\N
 94b1c89c-7a20-40f3-be38-1b619a207b64	plugins	\N
 123e4106-913e-4670-b8f8-da3543db7a1b	consumers	{}
@@ -2105,6 +2150,8 @@ e09deb31-2322-45c8-b553-0fbde3da9b62	consumers	{}
 84c98a6c-0b19-4e90-8d39-af6f3bd290b8	basicauth_credentials	\N
 7393ae37-03ba-4cda-b693-6439eecce2f7	plugins	\N
 6580ac38-f3c4-4e72-8347-545ada27e9a5	plugins	\N
+8ebb282d-351b-4201-982f-3d5a134d001a	routes	\N
+119ed191-30b9-49dc-a3f2-be17a8d69b92	routes	\N
 \.
 
 
