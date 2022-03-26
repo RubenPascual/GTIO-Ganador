@@ -536,13 +536,14 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/cat",
+									"raw": "localhost:8000/cat/v0",
 									"host": [
 										"localhost"
 									],
 									"port": "8000",
 									"path": [
-										"cat"
+										"cat",
+										"v0"
 									],
 									"query": [
 										{
@@ -607,14 +608,15 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/cat/72",
+									"raw": "localhost:8000/cat/v0/74",
 									"host": [
 										"localhost"
 									],
 									"port": "8000",
 									"path": [
 										"cat",
-										"72"
+										"v0",
+										"74"
 									],
 									"query": [
 										{
@@ -679,13 +681,14 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/cat/2",
+									"raw": "localhost:8000/cat/v0/2",
 									"host": [
 										"localhost"
 									],
 									"port": "8000",
 									"path": [
 										"cat",
+										"v0",
 										"2"
 									],
 									"query": [
@@ -754,13 +757,14 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/cat/2",
+									"raw": "localhost:8000/cat/v0/2",
 									"host": [
 										"localhost"
 									],
 									"port": "8000",
 									"path": [
 										"cat",
+										"v0",
 										"2"
 									],
 									"query": [
@@ -831,13 +835,14 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/dog",
+									"raw": "localhost:8000/dog/v0",
 									"host": [
 										"localhost"
 									],
 									"port": "8000",
 									"path": [
-										"dog"
+										"dog",
+										"v0"
 									],
 									"query": [
 										{
@@ -905,13 +910,14 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/dog/3",
+									"raw": "localhost:8000/dog/v0/3",
 									"host": [
 										"localhost"
 									],
 									"port": "8000",
 									"path": [
 										"dog",
+										"v0",
 										"3"
 									],
 									"query": [
@@ -977,13 +983,14 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/dog/3",
+									"raw": "localhost:8000/dog/v0/3",
 									"host": [
 										"localhost"
 									],
 									"port": "8000",
 									"path": [
 										"dog",
+										"v0",
 										"3"
 									],
 									"query": [
@@ -1049,13 +1056,14 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/dog/6",
+									"raw": "localhost:8000/dog/v0/6",
 									"host": [
 										"localhost"
 									],
 									"port": "8000",
 									"path": [
 										"dog",
+										"v0",
 										"6"
 									],
 									"query": [

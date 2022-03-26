@@ -1,0 +1,105 @@
+{
+    "tries": [
+        {
+            "ip": "172.17.0.1",
+            "balancer_latency": 0,
+            "port": 5050,
+            "balancer_start": 1648118046158
+        }
+    ],
+    "request": {
+        "url": "http://localhost:8000/cat/2",
+        "method": "GET",
+        "size": 628,
+        "headers": {
+            "content-type": "multipart/form-data; boundary=--------------------------698020375723560912875073",
+            "accept-encoding": "gzip, deflate, br",
+            "accept": "*/*",
+            "content-length": "270",
+            "x-consumer-groups": "cat",
+            "user-agent": "PostmanRuntime/7.29.0",
+            "x-credential-username": "cat",
+            "x-credential-identifier": "cat",
+            "x-consumer-username": "cat",
+            "x-consumer-custom-id": "cat",
+            "x-consumer-id": "e09deb31-2322-45c8-b553-0fbde3da9b62",
+            "connection": "keep-alive",
+            "host": "localhost:8000",
+            "authorization": "REDACTED",
+            "postman-token": "afe66749-d1bb-4cfd-b0ad-603d97b70378"
+        },
+        "uri": "/cat/2",
+        "querystring": {}
+    },
+    "workspace": "3c4ca33f-a242-4d4e-9be7-74b1f2baa013",
+    "upstream_uri": "/v0/cat/2",
+    "service": {
+        "write_timeout": 60000,
+        "ws_id": "3c4ca33f-a242-4d4e-9be7-74b1f2baa013",
+        "protocol": "http",
+        "connect_timeout": 60000,
+        "read_timeout": 60000,
+        "host": "172.17.0.1",
+        "tags": [],
+        "enabled": true,
+        "path": "/v0/cat",
+        "retries": 5,
+        "updated_at": 1647798935,
+        "name": "Cats",
+        "id": "8345bcf4-f363-4068-ad1e-3469b46dfff2",
+        "created_at": 1647798925,
+        "port": 5050
+    },
+    "latencies": {
+        "request": 147,
+        "kong": 38,
+        "proxy": 109
+    },
+    "started_at": 1648118046122,
+    "client_ip": "172.23.0.1",
+    "authenticated_entity": {
+        "id": "84c98a6c-0b19-4e90-8d39-af6f3bd290b8"
+    },
+    "route": {
+        "regex_priority": 0,
+        "ws_id": "3c4ca33f-a242-4d4e-9be7-74b1f2baa013",
+        "service": {
+            "id": "8345bcf4-f363-4068-ad1e-3469b46dfff2"
+        },
+        "protocols": ["http"],
+        "path_handling": "v0",
+        "paths": ["/cat"],
+        "strip_path": true,
+        "request_buffering": true,
+        "response_buffering": true,
+        "preserve_host": false,
+        "created_at": 1647798958,
+        "updated_at": 1647798976,
+        "name": "v0-Cats",
+        "id": "119ed191-30b9-49dc-a3f2-be17a8d69b92",
+        "https_redirect_status_code": 426
+    },
+    "consumer": {
+        "custom_id": "cat",
+        "username_lower": "cat",
+        "tags": [],
+        "id": "e09deb31-2322-45c8-b553-0fbde3da9b62",
+        "type": 0,
+        "username": "cat",
+        "created_at": 1647801051
+    },
+    "response": {
+        "headers": {
+            "content-type": "application/json",
+            "via": "kong/2.8.0.0-enterprise-edition",
+            "connection": "close",
+            "date": "Thu, 24 Mar 2022 10:34:06 GMT",
+            "content-length": "166522",
+            "x-kong-upstream-latency": "109",
+            "server": "Werkzeug/1.0.1 Python/2.7.17",
+            "x-kong-proxy-latency": "36"
+        },
+        "status": 200,
+        "size": 166790
+    }
+}
