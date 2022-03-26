@@ -10,7 +10,7 @@ Get information of a Cat with a given id
 
 **Permissions required** : User must be in Cat or CatDog group
 
-**Data constraints** : id must be a positive integeer
+**Data constraints** : id must be a positive integer
 
 ## Success Responses
 

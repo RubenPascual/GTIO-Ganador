@@ -66,7 +66,7 @@ def create_cat():
         elif path == -2:
             return (Response(json.dumps({"error" : "File format not supported"}),status=400, mimetype='application/json'))
         elif path == -3:
-            return (Response(json.dumps({"error" : "Unexpected error"}),status=500, mimetype='application/json'))
+            return (Response(json.dumps({"error" : "Internal error, try bagain later"}),status=500, mimetype='application/json'))
     result = cat_utils._create_cat(data)
 
     #Check the result and return response
@@ -75,12 +75,17 @@ def create_cat():
         return (Response(result, status=200, mimetype='application/json'))
     else:
         #Error inserting cat in DB
-        return (Response(json.dumps({"error" : "Error inserting cat in database"}),status=500, mimetype='application/json'))
+        return (Response(json.dumps({"error" : "Internal error, try again later"}),status=500, mimetype='application/json'))
 
 
 #curl -X PUT -d '{ "name": "gato0", "race": "naranja"}' localhost:5050/v0/cat/1 -H "content-type: application/json"
 @app.route('/v0/cat/<id>', methods=['PUT'])
 def update_cat(id):
+
+    #######
+    #TODO check if the cat exists 
+    #######
+
     #Extract data from the request
     name = request.form.get("name")
     race = request.form.get("race")
@@ -106,29 +111,38 @@ def update_cat(id):
         elif path == -2:
             return (Response(json.dumps({"error" : "File format not supported"}),status=400, mimetype='application/json'))
         elif path == -3:
-            return (Response(json.dumps({"error" : "Unexpected error"}),status=500, mimetype='application/json'))
+            return (Response(json.dumps({"error" : "Internal error, try again later"}),status=500, mimetype='application/json'))
 
     #Retrieve the previous path and delete the file
     previous_path = cat_utils._get_cat_by_id(id)["file_path"]
-    delete_file(previous_path)
     result = cat_utils._update_cat(id,data)
 
-    #######
-    #TODO check if the image was deleted successfully 
-    #######
+    
 
     if result != -1:
+        delete_file(previous_path)
+
+        #######
+        #TODO check if the image was deleted successfully 
+        #######
+        
         result = json.dumps(result)
         return (Response(result, status=200, mimetype='application/json'))
     else:
         #Error inserting cat in DB
-        return (Response(json.dumps({"error" : "Error inserting cat in database"}),status=500, mimetype='application/json'))
+        delete_file(path)
+        return (Response(json.dumps({"error" : "Internal error, try again later"}),status=500, mimetype='application/json'))
 
 
 
 #curl -X DELETE localhost:5050/v0/cat/1
 @app.route('/v0/cat/<id>', methods=['DELETE'])
 def delete_cat(id):
+
+    #######
+    #TODO check if the cat exists 
+    #######
+
     #Delete the data from the database and delete the file
     result, image_path = cat_utils._delete_cat(id)
     deleted = delete_file(image_path)
@@ -141,8 +155,8 @@ def delete_cat(id):
         result = json.dumps(result)
         return (Response(result, status=200, mimetype='application/json'))
     else:
-        #Error inserting cat in DB
-        return (Response(json.dumps({"error" : "Error inserting cat in database"}),status=500, mimetype='application/json'))
+        #Error deleting cat from DB
+        return (Response(json.dumps({"error" : "Error deleting cat from database"}),status=500, mimetype='application/json'))
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
