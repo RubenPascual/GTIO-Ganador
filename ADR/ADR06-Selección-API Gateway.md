@@ -69,12 +69,3 @@ https://www.krakend.io/
 * Positivo, porque ofrece analiticas.
 * Positivo, porque ofrece autenticación.
 * Negativo, porque no ofrece una interfaz gráfica
-
-...
-
-## Enlaces <!-- opcional -->
-
-* [Link type] [Link to ADR] <!-- ejemplo: Detallado en [ADR-0005](0005-example.md) -->
-* …
-
-## [Cualquier otro apartado que se considere] <!-- opcional -->
