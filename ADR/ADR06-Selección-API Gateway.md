@@ -16,10 +16,10 @@ Como equipo de desarrollo necestiamos elgir la herramienta de gestión de tráfi
 
 ## Opciones Consideradas
 
-Kong
-WSO2
-TYK
-KrakenD
+* Kong
+* WSO2
+* TYK
+* KrakenD
 
 ## Decisión
 
@@ -30,7 +30,7 @@ KrakenD
 
 ### Kong
 
-https://konghq.com/kong/
+Más información de [Kong](https://konghq.com/kong/)
 
 * Positivo, porque es muy sencillo de instalar mediante docker.
 * Positivo, porque ofrece analiticas.
@@ -41,7 +41,7 @@ https://konghq.com/kong/
 
 ### WSO2
 
-https://wso2.com/api-manager/
+Más información de [WSO2](https://wso2.com/api-manager/)
 
 * Positivo, porque ofrece analiticas.
 * Positivo, porque ofrece autenticación.
@@ -51,7 +51,7 @@ https://wso2.com/api-manager/
 
 ### TYK
 
-https://tyk.io/
+Más información de [TYK](https://tyk.io/)
 
 * Positivo, porque ofrece analiticas.
 * Positivo, porque ofrece autenticación.
@@ -63,7 +63,7 @@ https://tyk.io/
 
 ### KrakenD
 
-https://www.krakend.io/
+Más información de [KrakenD](https://www.krakend.io/)
 
 * Positivo, porque ofrece mucha velocidad de tratamineto de peticiones.
 * Positivo, porque ofrece analiticas.
