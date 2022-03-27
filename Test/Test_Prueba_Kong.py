@@ -7,26 +7,33 @@ import os
 import json
 # importing sys
 import sys
+from requests.auth import HTTPBasicAuth
 
 
 class TestSum(unittest.TestCase):
+
     def test_read_cat_Test(self):
         with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
-            url1 = 'http://localhost:5050/v0/cat'
+            url1 = 'http://localhost:8000/cat/v0'
             payload={'name': 'gato',
                     'race' : 'raza'}
             files=[
             ('file',('test_cat.png',img,'image/png'))
             ]
+            basic = HTTPBasicAuth('cat', 'cat')
 
-            resul = requests.request("POST", url1, data=payload, files=files)
+            resul = requests.request("POST", url1,data=payload, files=files, auth=basic)
             rjson = resul.json()
-        pruebas = [{"id": str(rjson["cat_id"]), "cod_expected" : 200}]
+        pruebas = [{"id": str(rjson["cat_id"]), "cod_expected" : 200},
+                {"id": "-1", "cod_expected" : 404},
+                {"id": "1000", "cod_expected" : 404}
+        ]
         for i in pruebas:
-            url = "http://localhost:5050/v0/cat/" + i["id"]
-            resul = requests.request("GET", url)
+            url = 'http://localhost:8000/cat/v0' + i["id"]
+            basic = HTTPBasicAuth('cat', 'cat')
+            resul = requests.request("GET", url, auth=basic)
             self.assertEqual(resul.status_code,i["cod_expected"])         
-            if (resul.status_code == i["cod_expected"]):
+            if (resul.status_code == 200):
                 rjson =  resul.json()
                 self.assertTrue (
                     rjson["image"] != None and rjson["name"] != None and rjson["race"] != None ,
@@ -39,7 +46,7 @@ class TestSum(unittest.TestCase):
         """
         Test de creación de gato
         """
-        url = 'http://localhost:5050/v0/cat'
+        url = 'http://localhost:8000/cat/v0'
         payload={'name': 'gato',
                  'race': 'raza'
         }
@@ -48,7 +55,9 @@ class TestSum(unittest.TestCase):
             ('file',('test_cat.png',img,'image/png'))
             ]
 
-            resul = requests.request("POST", url, data=payload, files=files)  
+            basic = HTTPBasicAuth('cat', 'cat')
+            resul = requests.request("POST", url, data=payload, files=files, auth=basic)
+
             self.assertEqual(resul.status_code,200)      
             if (resul.status_code == 200):
                 rjson =  resul.json()
@@ -63,24 +72,25 @@ class TestSum(unittest.TestCase):
         test update un gato
         '''
         with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
-            url1 = 'http://localhost:5050/v0/cat'
+            url1 = 'http://localhost:8000/cat/v0'
             payload={'name': 'gato',
                     'race' : 'raza'}
             files=[
             ('file',('test_cat.png',img,'image/png'))
             ]
-
-            resul = requests.request("POST", url1, data=payload, files=files)
+            basic = HTTPBasicAuth('cat', 'cat')
+            resul = requests.request("POST", url1, data=payload, files=files,auth = basic)
             rjson = resul.json()
         pruebas = [{"id": str(rjson["cat_id"]), "cod_expected" : 200}]
         for i in pruebas:
-            url = 'http://localhost:5050/v0/cat/'+i["id"]
+            url = 'http://localhost:8000/cat/v0'+i["id"]
             payload ={
                 'name': 'cat', 
                 'race' : 'raza',
                 'file' : '/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png'
-            }  
-            resul = requests.put(url, data=payload) 
+            } 
+            basic = HTTPBasicAuth('cat', 'cat')
+            resul = requests.put(url, data=payload, auth= basic) 
             if(resul.status_code == 200):
                 rjson = resul.json()
                 self.assertTrue (
@@ -95,19 +105,23 @@ class TestSum(unittest.TestCase):
         delete get un gato
         '''
         with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
-            url1 = 'http://localhost:5050/v0/cat'
+            url1 = 'http://localhost:8000/cat/v0'
             payload={'name': 'gato',
                     'race' : 'raza'}
             files=[
             ('file',('test_cat.png',img,'image/png'))
             ]
-
-            resul = requests.request("POST", url1, data=payload, files=files)
+            basic = HTTPBasicAuth('cat', 'cat')
+            resul = requests.request("POST", url1, data=payload, files=files, auth = basic)
             rjson = resul.json()
-        pruebas = [{"id": str(rjson["cat_id"]), "cod_expected" : 200}]
+        pruebas = [{"id": str(rjson["cat_id"]), "cod_expected" : 200},
+                {"id": "-1", "cod_expected" : 500},
+                {"id": "1000", "cod_expected" : 500}
+        ]
         for i in pruebas:
-            url =  'http://localhost:5050/v0/cat/'+i["id"]
-            resul = requests.delete(url)
+            url =  'http://localhost:8000/cat/v0'+i["id"]
+            basic = HTTPBasicAuth('cat', 'cat')
+            resul = requests.delete(url, auth = basic)
             self.assertEqual(resul.status_code,i["cod_expected"],"Codigo incorrecto en el  delete_cat_Test del gato con  id = "+i["id"]+", código "+ str(resul.status_code))
             if(resul.status_code == 200):
                 rjson = resul.json()
