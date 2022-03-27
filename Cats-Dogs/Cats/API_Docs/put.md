@@ -10,17 +10,11 @@ Update information of a Cat with a given id
 
 **Permissions required** : User must be in Cat or CatDog group
 
-**Data constraints** : id must be a positive integer. The request must provide a name, a race and an image. The image must be in png format.
+**Data constraints** : id must be a positive integer. The request must provide a name, a race and an image. The image must be in png format. The request must be a form with the following fields:
 
-```json
-[
-    {
-        "name": "[string]",
-        "race": "[string]",
-        "image": "[png file]"
-    }
-]
-```
+- name: string
+- race: string
+- image: png file
 
 ## Success Responses
 

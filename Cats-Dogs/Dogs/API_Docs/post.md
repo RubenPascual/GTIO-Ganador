@@ -10,17 +10,11 @@ Insert a new dog in the database
 
 **Permissions required** : User must be in Dog or CatDog group
 
-**Data constraints** : Provide a name, a race and an image. The image must be in png format.
+**Data constraints** : Provide a name, a race and an image. The image must be in png format. The request must be a form with the following fields:
 
-```json
-[
-    {
-        "name": "[string]",
-        "race": "[string]",
-        "image": "[png file]"
-    }
-]
-```
+- name: string
+- race: string
+- image: png file
 
 ## Success Responses
 
