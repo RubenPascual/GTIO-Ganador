@@ -14,6 +14,7 @@ Para justificar las distintas decisiones tomadas a lo largo del proyecto utiliza
 
   * [ADR004 - Selección de framework para realizar las APIs Cats&Dogs](ADR/ADR04_Story3_API_Framework.md)
   * [ADR005 - Selección BBDD para almacenar info Cats&Dogs](ADR/ADR05_Seleccion_BBDD.md) 
+  * [ADR006 - Selección API Gateway](ADR/ADR06-Selección-API Gateway.md) 
 
 * RFI-III
 * 
