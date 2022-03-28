@@ -44,23 +44,28 @@ class DOGS_CRUD(unittest.TestCase):
         Test de creación de perro
         """
         url = 'http://localhost:5051/v0/dog'
-        payload={'name': 'perro',
-                 'race': 'raza'
-        }
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_dog.png','rb') as img:
-            files=[
-            ('file',('test_dog.png',img,'image/png'))
-            ]
+        pruebas = [{"file": "test_dog.png" , "cod_expected" : 200},
+            {"file": "" , "cod_expected" : 400},
+            {"file": "test_dog.pgr" , "cod_expected" : 400}
+        ]
+        for i in pruebas:
+            payload={'name': 'perro',
+                    'race': 'raza'
+            }
+            with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_dog.png','rb') as img:
+                files=[
+                ('file',(i["file"],img,'image/png'))
+                ]
 
-            resul = requests.request("POST", url, data=payload, files=files)  
-            self.assertEqual(resul.status_code,200)      
-            if (resul.status_code == 200):
-                rjson =  resul.json()
-                print(rjson)
-                self.assertTrue (
-                    rjson["dog_id"] >=0 ,
-                    "fallo en  create_cat_Test , se esperaba que fuera positivo y tiene valor : "+ str(rjson["dog_id"])
-                    )
+                resul = requests.request("POST", url, data=payload, files=files)  
+                self.assertEqual(resul.status_code,i["cod_expected"])      
+                if (resul.status_code == 200):
+                    rjson =  resul.json()
+                    print(rjson)
+                    self.assertTrue (
+                        rjson["dog_id"] >=0 ,
+                        "fallo en  create_cat_Test , se esperaba que fuera positivo y tiene valor : "+ str(rjson["dog_id"])
+                        )
 
     def test_update_dog_Test(self):
         '''
@@ -76,7 +81,10 @@ class DOGS_CRUD(unittest.TestCase):
 
             resul = requests.request("POST", url1, data=payload, files=files)
             rjson = resul.json()
-        pruebas = [{"id": str(rjson["dog_id"]), "cod_expected" : 200}]
+        pruebas = [{"id": str(rjson["dog_id"]), "cod_expected" : 200},
+                {"id": "-1", "cod_expected" : 404},
+                {"id": "1000", "cod_expected" : 404}
+        ]
         for i in pruebas:
             url = 'http://localhost:5051/v0/dog'+i["id"]
             payload ={

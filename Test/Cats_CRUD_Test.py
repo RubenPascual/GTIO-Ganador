@@ -38,34 +38,39 @@ class CATS_CRUD(unittest.TestCase):
                 )
 
     def test_create_cat_Test(self):
-
        ##Creación de un gato correcta 
         """
         Test de creación de gato
         """
         url = 'http://localhost:5050/v0/cat'
-        payload={'name': 'gato',
-                 'race': 'raza'
-        }
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
-            files=[
-            ('file',('test_cat.png',img,'image/png'))
-            ]
+        pruebas = [{"file": "test_cat.png" , "cod_expected" : 200},
+            {"file": "" , "cod_expected" : 400},
+            {"file": "test_cat.pgr" , "cod_expected" : 400}
+        ]
+        for i in pruebas:
+            payload={'name': 'gato',
+                    'race': 'raza'
+            }
+            with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+                files=[
+                ('file',(i["file"],'','image/png'))
+                ]
 
-            resul = requests.request("POST", url, data=payload, files=files)  
-            self.assertEqual(resul.status_code,200)      
-            if (resul.status_code == 200):
-                rjson =  resul.json()
-                print(rjson)
-                self.assertTrue (
-                    rjson["cat_id"] >=0 ,
-                    "fallo en  create_cat_Test , se esperaba que fuera positivo y tiene valor : "+ str(rjson["cat_id"])
-                    )
+                resul = requests.request("POST", url, data=payload, files=files)  
+                self.assertEqual(resul.status_code,i["cod_expected"])      
+                if (resul.status_code == 200):
+                    rjson =  resul.json()
+                    print(rjson)
+                    self.assertTrue (
+                        rjson["cat_id"] >=0 ,
+                        "fallo en  create_cat_Test , se esperaba que fuera positivo y tiene valor : "+ str(rjson["cat_id"])
+                        )
 
     def test_update_cat_Test(self):
         '''
         test update un gato
         '''
+
         with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
             url1 = 'http://localhost:5050/v0/cat'
             payload={'name': 'gato',
@@ -76,7 +81,10 @@ class CATS_CRUD(unittest.TestCase):
 
             resul = requests.request("POST", url1, data=payload, files=files)
             rjson = resul.json()
-        pruebas = [{"id": str(rjson["cat_id"]), "cod_expected" : 200}]
+        pruebas = [{"id": str(rjson["cat_id"]), "cod_expected" : 200},
+                {"id": "-1", "cod_expected" : 404},
+                {"id": "1000", "cod_expected" : 404}
+        ]
         for i in pruebas:
             url = 'http://localhost:5050/v0/cat/'+i["id"]
             payload ={
