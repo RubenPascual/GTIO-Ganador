@@ -51,7 +51,7 @@ class CATS_CRUD(unittest.TestCase):
                 'race': 'raza'
             }
 
-            with open('/home/alumno/Escritorio/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+            with open('./images/test_cat.png','rb') as img:
                 files=[
                     ('file',(i["file"],img,'image/png'))
                 ]
