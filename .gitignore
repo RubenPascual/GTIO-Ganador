@@ -2,4 +2,5 @@ Cats-Dogs/Cats/.cat-images
 Cats-Dogs/Dogs/.dog-images
 Cats-Dogs/Database/konga
 Cats-Dogs/Database/logs/file.log
-./Test/__pycache__
+**/__pycache__
+**/*.pyc
