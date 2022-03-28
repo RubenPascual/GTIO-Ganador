@@ -12,7 +12,10 @@ import sys
 class DOGS_CRUD(unittest.TestCase):
 
     def test_read_dog_Test(self):
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_dog.png','rb') as img:
+        '''
+        Test consulta dog
+        '''
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_dog.png','rb') as img:
             url1 = 'http://localhost:5051/v0/dog'
             payload={'name': 'perro',
                     'race' : 'raza'}
@@ -38,11 +41,10 @@ class DOGS_CRUD(unittest.TestCase):
                 )
 
     def test_create_dog_Test(self):
-
-       ##Creación de un perro correcta 
-        """
-        Test de creación de perro
-        """
+        '''
+        Test creación dog
+        '''
+        
         url = 'http://localhost:5051/v0/dog'
         pruebas = [{"file": "test_dog.png" , "cod_expected" : 200},
             {"file": "" , "cod_expected" : 400},
@@ -52,7 +54,7 @@ class DOGS_CRUD(unittest.TestCase):
             payload={'name': 'perro',
                     'race': 'raza'
             }
-            with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_dog.png','rb') as img:
+            with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_dog.png','rb') as img:
                 files=[
                 ('file',(i["file"],img,'image/png'))
                 ]
@@ -61,7 +63,6 @@ class DOGS_CRUD(unittest.TestCase):
                 self.assertEqual(resul.status_code,i["cod_expected"])      
                 if (resul.status_code == 200):
                     rjson =  resul.json()
-                    print(rjson)
                     self.assertTrue (
                         rjson["dog_id"] >=0 ,
                         "fallo en  create_cat_Test , se esperaba que fuera positivo y tiene valor : "+ str(rjson["dog_id"])
@@ -69,9 +70,9 @@ class DOGS_CRUD(unittest.TestCase):
 
     def test_update_dog_Test(self):
         '''
-        test update un perro
+        Test actualización dog
         '''
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_dog.png','rb') as img:
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_dog.png','rb') as img:
             url1 = 'http://localhost:5051/v0/dog'
             payload={'name': 'perro',
                     'race' : 'raza'}
@@ -104,9 +105,9 @@ class DOGS_CRUD(unittest.TestCase):
 
     def test_delete_dog_Test(self):
         '''
-        delete get un perro
+        Test borrado dog
         '''
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_dog.png','rb') as img:
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_dog.png','rb') as img:
             url1 = 'http://localhost:5051/v0/dog'
             payload={'name': 'perro',
                     'race' : 'raza'}
@@ -126,12 +127,10 @@ class DOGS_CRUD(unittest.TestCase):
             self.assertEqual(resul.status_code,i["cod_expected"],"Codigo incorrecto en el  delete_cat_Test del perro con  id = "+i["id"]+", código "+ str(resul.status_code))
             if(resul.status_code == 200):
                 rjson = resul.json()
-                print(rjson)
                 self.assertTrue (
                     rjson["Rows deleted"] ==1 ,
                     "fallo en  delete_cat_Test , se esperaba que se actualizara una fila, numero de filas : " +  str(rjson["Rows deleted"])
                 )
-                print(rjson["Rows deleted"])
 
 
 

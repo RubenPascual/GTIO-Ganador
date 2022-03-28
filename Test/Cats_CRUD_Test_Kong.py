@@ -13,7 +13,10 @@ from requests.auth import HTTPBasicAuth
 class CATS_CRUD_Kong(unittest.TestCase):
 
     def test_read_cat_Test(self):
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+        '''
+        Test consulta cat
+        '''
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_cat.png','rb') as img:
             url1 = 'http://localhost:8000/cat/v0'
             payload={'name': 'gato',
                     'race' : 'raza'}
@@ -40,8 +43,6 @@ class CATS_CRUD_Kong(unittest.TestCase):
                 )
 
     def test_create_cat_Test(self):
-
-       ##Creación de un gato correcta 
         """
         Test de creación de gato
         """
@@ -55,7 +56,7 @@ class CATS_CRUD_Kong(unittest.TestCase):
                     'race': 'raza'
             }
 
-            with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+            with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_cat.png','rb') as img:
                 files=[
                 ('file',(i["file"],img,'image/png'))
                 ]
@@ -66,7 +67,6 @@ class CATS_CRUD_Kong(unittest.TestCase):
                 self.assertEqual(resul.status_code,i["cod_expected"])      
                 if (resul.status_code == 200):
                     rjson =  resul.json()
-                    print(rjson)
                     self.assertTrue (
                         rjson["cat_id"] >=0 ,
                         "fallo en  create_cat_Test , se esperaba que fuera positivo y tiene valor : "+ str(rjson["cat_id"])
@@ -74,9 +74,9 @@ class CATS_CRUD_Kong(unittest.TestCase):
 
     def test_update_cat_Test(self):
         '''
-        test update un gato
+        Test actualización cat
         '''
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_cat.png','rb') as img:
             url1 = 'http://localhost:8000/cat/v0'
             payload={'name': 'gato',
                     'race' : 'raza'}
@@ -110,9 +110,9 @@ class CATS_CRUD_Kong(unittest.TestCase):
 
     def test_delete_cat_Test(self):
         '''
-        delete get un gato
+        Test borrado cat
         '''
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_cat.png','rb') as img:
             url1 = 'http://localhost:8000/cat/v0'
             payload={'name': 'gato',
                     'race' : 'raza'}
@@ -133,12 +133,23 @@ class CATS_CRUD_Kong(unittest.TestCase):
             self.assertEqual(resul.status_code,i["cod_expected"],"Codigo incorrecto en el  delete_cat_Test del gato con  id = "+i["id"]+", código "+ str(resul.status_code))
             if(resul.status_code == 200):
                 rjson = resul.json()
-                print(rjson)
                 self.assertTrue (
                     rjson["Rows deleted"] ==1 ,
                     "fallo en  delete_cat_Test , se esperaba que se actualizara una fila, numero de filas : " +  str(rjson["Rows deleted"])
                 )
-                print(rjson["Rows deleted"])
+
+    def test_security_Test(self):
+        '''
+        Test security cat
+        '''
+        url = 'http://localhost:8000/cat/v0/2'
+        resul = requests.request("GET", url)
+        self.assertEqual(resul.status_code,401,"Fallo de seguridad. Un usuario ha realizado una peticion sin autenticar")   
+
+        url = 'http://localhost:8000/cat/v0/2' 
+        basic = HTTPBasicAuth('mal', 'mal')
+        resul = requests.request("GET", url, auth=basic)
+        self.assertEqual(resul.status_code,401,"Fallo de seguridad. Un usuario ha realizado una peticion concredenciales incorrectas") 
 
 
 

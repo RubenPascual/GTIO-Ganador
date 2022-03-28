@@ -12,7 +12,10 @@ from requests.auth import HTTPBasicAuth
 class DOGS_CRUD(unittest.TestCase):
 
     def test_read_dog_Test(self):
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_dog.png','rb') as img:
+        '''
+        Test consulta dog
+        '''
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_dog.png','rb') as img:
             url1 = 'http://localhost:8000/dog/v0'
             payload={'name': 'perro',
                     'race' : 'raza'}
@@ -39,11 +42,9 @@ class DOGS_CRUD(unittest.TestCase):
                 )
 
     def test_create_dog_Test(self):
-
-       ##Creación de un perro correcta 
-        """
-        Test de creación de perro
-        """
+        '''
+        Test creación dog
+        '''
 
         url = 'http://localhost:8000/dog/v0'
 
@@ -55,7 +56,7 @@ class DOGS_CRUD(unittest.TestCase):
             payload={'name': 'perro',
                     'race': 'raza'
             }
-            with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_dog.png','rb') as img:
+            with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_dog.png','rb') as img:
                 files=[
                 ('file',(i["file"],img,'image/png'))
                 ]
@@ -71,9 +72,9 @@ class DOGS_CRUD(unittest.TestCase):
 
     def test_update_dog_Test(self):
         '''
-        test update un perro
+        Test actualización dog
         '''
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_dog.png','rb') as img:
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_dog.png','rb') as img:
             url1 = 'http://localhost:8000/dog/v0'
             payload={'name': 'perro',
                     'race' : 'raza'}
@@ -107,9 +108,9 @@ class DOGS_CRUD(unittest.TestCase):
 
     def test_delete_dog_Test(self):
         '''
-        delete get un perro
+        Test borrado dog
         '''
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_dog.png','rb') as img:
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_dog.png','rb') as img:
             url1 = 'http://localhost:8000/dog/v0'
             payload={'name': 'perro',
                     'race' : 'raza'}
@@ -134,9 +135,11 @@ class DOGS_CRUD(unittest.TestCase):
                     rjson["Rows deleted"] ==1 ,
                     "fallo en  delete_cat_Test , se esperaba que se actualizara una fila, numero de filas : " +  str(rjson["Rows deleted"])
                 )
-                print(rjson["Rows deleted"])
 
     def test_security_Test(self):
+        '''
+        Test security dog
+        '''
         url = 'http://localhost:8000/dog/v0/2'
         resul = requests.request("GET", url)
         self.assertEqual(resul.status_code,401,"Fallo de seguridad. Un usuario ha realizado una peticion sin autenticar")   

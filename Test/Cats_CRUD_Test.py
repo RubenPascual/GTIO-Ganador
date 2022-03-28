@@ -1,18 +1,16 @@
 # test_with_unittest.py
 import unittest
 import requests
-import base64
-import json
 import os
-import json
-# importing sys
-import sys
 
 
 class CATS_CRUD(unittest.TestCase):
 
     def test_read_cat_Test(self):
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+        """
+        Test consulta cat
+        """
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_cat.png','rb') as img:
             url1 = 'http://localhost:5050/v0/cat'
             payload={'name': 'gato',
                     'race' : 'raza'}
@@ -38,29 +36,30 @@ class CATS_CRUD(unittest.TestCase):
                 )
 
     def test_create_cat_Test(self):
-       ##Creación de un gato correcta 
         """
-        Test de creación de gato
+        Test creación cat
         """
         url = 'http://localhost:5050/v0/cat'
-        pruebas = [{"file": "test_cat.png" , "cod_expected" : 200},
+        pruebas = [
+            {"file": "test_cat.png" , "cod_expected" : 200},
             {"file": "" , "cod_expected" : 400},
             {"file": "test_cat.pgr" , "cod_expected" : 400}
         ]
         for i in pruebas:
-            payload={'name': 'gato',
-                    'race': 'raza'
+            payload={
+                'name': 'gato',
+                'race': 'raza'
             }
-            with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+
+            with open('/home/alumno/Escritorio/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
                 files=[
-                ('file',(i["file"],'','image/png'))
+                    ('file',(i["file"],img,'image/png'))
                 ]
 
                 resul = requests.request("POST", url, data=payload, files=files)  
                 self.assertEqual(resul.status_code,i["cod_expected"])      
                 if (resul.status_code == 200):
                     rjson =  resul.json()
-                    print(rjson)
                     self.assertTrue (
                         rjson["cat_id"] >=0 ,
                         "fallo en  create_cat_Test , se esperaba que fuera positivo y tiene valor : "+ str(rjson["cat_id"])
@@ -68,10 +67,10 @@ class CATS_CRUD(unittest.TestCase):
 
     def test_update_cat_Test(self):
         '''
-        test update un gato
+        Test actualización cat
         '''
 
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_cat.png','rb') as img:
             url1 = 'http://localhost:5050/v0/cat'
             payload={'name': 'gato',
                     'race' : 'raza'}
@@ -90,7 +89,7 @@ class CATS_CRUD(unittest.TestCase):
             payload ={
                 'name': 'cat', 
                 'race' : 'raza',
-                'file' : '/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png'
+                'file' : '../images/test_cat.png'
             }  
             resul = requests.put(url, data=payload) 
             if(resul.status_code == 200):
@@ -104,9 +103,9 @@ class CATS_CRUD(unittest.TestCase):
 
     def test_delete_cat_Test(self):
         '''
-        delete get un gato
+        Test borrado cat
         '''
-        with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+        with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_cat.png','rb') as img:
             url1 = 'http://localhost:5050/v0/cat'
             payload={'name': 'gato',
                     'race' : 'raza'}
@@ -126,12 +125,10 @@ class CATS_CRUD(unittest.TestCase):
             self.assertEqual(resul.status_code,i["cod_expected"],"Codigo incorrecto en el  delete_cat_Test del gato con  id = "+i["id"]+", código "+ str(resul.status_code))
             if(resul.status_code == 200):
                 rjson = resul.json()
-                print(rjson)
                 self.assertTrue (
                     rjson["Rows deleted"] ==1 ,
                     "fallo en  delete_cat_Test , se esperaba que se actualizara una fila, numero de filas : " +  str(rjson["Rows deleted"])
                 )
-                print(rjson["Rows deleted"])
 
 
 
