@@ -17,7 +17,7 @@ Para justificar las distintas decisiones tomadas a lo largo del proyecto utiliza
   * [ADR006 - Selección API Gateway](ADR/ADR06_Selección_API_Gateway.md) 
 
 * RFI-III
-* 
+  * 
 
 ## Documentación APIs
 
