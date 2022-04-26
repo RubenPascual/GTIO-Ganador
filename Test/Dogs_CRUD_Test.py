@@ -14,7 +14,7 @@ try:
 
         def test_read_dog_Test(self):
             '''
-            Test consulta dog
+            Test consulta dog 
             '''
             with open(os.path.dirname(os.path.abspath(__file__))+'/images/test_dog.png','rb') as img:
                 url1 = 'http://localhost:5051/v0/dog'
