@@ -15,7 +15,7 @@ class CATS_CRUD_Kong(unittest.TestCase):
 
     def test_read_cat_Test(self):
         try:
-            with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+            with open(os.path.dirname(os.path.abspath(__file__))+'images/test_cat.png','rb') as img:
                 url1 = 'http://localhost:8000/cat/v0'
                 payload={'name': 'gato',
                         'race' : 'raza'}
@@ -62,7 +62,7 @@ class CATS_CRUD_Kong(unittest.TestCase):
                         'race': 'raza'
                 }
 
-                with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+                with open(os.path.dirname(os.path.abspath(__file__))+'images/test_cat.png','rb') as img:
                     files=[
                     ('file',(i["file"],img,'image/png'))
                     ]
@@ -88,7 +88,7 @@ class CATS_CRUD_Kong(unittest.TestCase):
         test update un gato
         '''
         try:
-            with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+            with open(os.path.dirname(os.path.abspath(__file__))+'images/test_cat.png','rb') as img:
                 url1 = 'http://localhost:8000/cat/v0'
                 payload={'name': 'gato',
                         'race' : 'raza'}
@@ -108,7 +108,7 @@ class CATS_CRUD_Kong(unittest.TestCase):
                 payload ={
                     'name': 'cat', 
                     'race' : 'raza',
-                    'file' : '/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png'
+                    'file' : os.path.dirname(os.path.abspath(__file__))+'images/test_cat.png'
                 } 
                 basic = HTTPBasicAuth('cat', 'cat')
                 time.sleep(0.01)
@@ -129,7 +129,7 @@ class CATS_CRUD_Kong(unittest.TestCase):
         delete get un gato
         '''
         try:
-            with open('/home/alumno/Escritorio/Cats&Dogs/GTIO-Ganador/Test/images/test_cat.png','rb') as img:
+            with open(os.path.dirname(os.path.abspath(__file__))+'images/test_cat.png','rb') as img:
                 url1 = 'http://localhost:8000/cat/v0'
                 payload={'name': 'gato',
                         'race' : 'raza'}
