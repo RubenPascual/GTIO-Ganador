@@ -4,11 +4,15 @@ import dog_utils
 import os
 import uuid
 import base64
+import boto3
 
-ALLOWED_EXTENSIONS = set(['png'])
+ALLOWED_EXTENSIONS = set(['png','jpg','jpeg'])
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER')
+
+s3 = boto3.resource('s3')
+bucket = s3.Bucket(os.getenv('S3_NAME'))
 
 @app.route('/v0/')
 def hello():
@@ -147,7 +151,12 @@ def delete_dog(id):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def upload_file(file):
+def upload_file(file,storage="s3"):
+    if storage == "local":
+        return _upload_file_local(file)
+    if storage == "s3":
+        return _upload_file_s3(file)
+def _upload_file_local(file):
     # if user does not select file, the browser submits an empty file without filename
     if file.filename == '':
         return -1
@@ -162,17 +171,55 @@ def upload_file(file):
         return filename
     else:
         return -3
+def _upload_file_s3(file):
+    ##########################################
+    # TODO wait for the image to upload???   #
+    ##########################################
 
-def download_file(filename):
+    #Upload file temporarily to local storage
+    filename = upload_file(file)
+    if filename != -1 or filename != -2 or filename != -3:
+        #Upload file to S3 and delete temporal file
+        bucket.upload_file(os.path.join(app.config['UPLOAD_FOLDER'], filename),filename)
+        _delete_file_local(filename)
+    else:
+        return filename
+
+def download_file(filename,storage="s3"):
+    if storage == "local":
+        return _download_file_local(filename)
+    if storage == "s3":
+        return _download_file_s3(filename)
+def _download_file_local(filename):
     #Read file as binary and encode
     path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file = open(path, 'rb')
     data = file.read()
     return base64.b64encode(data).decode()
+def _download_file_s3(filename):
 
-def delete_file(filename):
+    ############################################
+    # TODO wait for the image to download???   #
+    ############################################
+
+    #Download temporarily the file to local storage
+    bucket.download_file(filename, os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    #Get local file data and delete temporal file
+    data = _download_file_local(filename)
+    _delete_file_local(filename)
+    return data
+
+def delete_file(filename,storage="s3"):
+    if storage == "local":
+        return _delete_file_local(filename)
+    if storage == "s3":
+        return _delete_file_s3(filename)
+def _delete_file_local(filename):
     path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     os.remove(path)
+    return 1
+def _delete_file_s3(filename):
+    bucket.Object(filename).delete()
     return 1
 
 if __name__ == '__main__':

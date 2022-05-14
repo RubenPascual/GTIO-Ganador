@@ -113,6 +113,7 @@ services:
     environment:
       API_VERSION: v0
       UPLOAD_FOLDER: images
+      S3_NAME: bucket
       POSTGRES_PASSWORD: password
       POSTGRES_DB: cats&dogs
       POSTGRES_USER: root
@@ -132,6 +133,7 @@ services:
     environment:
       API_VERSION: v0
       UPLOAD_FOLDER: images
+      S3_NAME: bucket
       POSTGRES_PASSWORD: password
       POSTGRES_DB: cats&dogs
       POSTGRES_USER: root
