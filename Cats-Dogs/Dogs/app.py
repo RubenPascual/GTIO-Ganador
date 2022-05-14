@@ -16,7 +16,8 @@ bucket = s3.Bucket(os.getenv('S3_NAME'))
 
 @app.route('/v0/')
 def hello():
-    return 'This is Dogs API version v0'
+    response = 'This is Dogs API version v0'
+    return (Response(response, status=200, mimetype='application/json'))
 
 #curl localhost:5050/dog/1
 @app.route('/v0/dog/<id>', methods=['GET'])

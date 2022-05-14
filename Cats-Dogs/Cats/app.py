@@ -16,7 +16,8 @@ bucket = s3.Bucket(os.getenv('S3_NAME'))
 
 @app.route('/v0/')
 def hello():
-    return 'This is Cats API version v0'
+    response = 'This is Cats API version v0'
+    return (Response(response, status=200, mimetype='application/json'))
 
 #curl localhost:5050/cat/1
 @app.route('/v0/cat/<id>', methods=['GET'])
