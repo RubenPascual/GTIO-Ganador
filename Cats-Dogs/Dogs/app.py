@@ -120,14 +120,12 @@ def update_dog(id):
         elif path == -3:
             return (Response(json.dumps({"error" : "Unexpected error"}),status=500, mimetype='application/json'))
 
-    if storage == "local":
-            #Retrieve the previous path and delete the file
-            previous_path = dog_utils._get_dog_by_id(id)["file_path"]
+    #Retrieve the previous path and delete the file
+    previous_path = dog_utils._get_dog_by_id(id)["file_path"]
     result = dog_utils._update_dog(id,data)
 
     if result != -1:
-        if storage == "local":
-            delete_file(previous_path)
+        delete_file(previous_path)
 
         #######
         #TODO check if the image was deleted successfully 
@@ -137,8 +135,7 @@ def update_dog(id):
         return (Response(result, status=200, mimetype='application/json'))
     else:
         #Error inserting cat in DB
-        if storage == "local":
-            delete_file(path)
+        delete_file(path)
         return (Response(json.dumps({"error" : "Internal error, try again later"}),status=500, mimetype='application/json'))
 
 
@@ -213,7 +210,7 @@ def _download_file_local(filename):
     return base64.b64encode(data).decode()
 def _download_file_s3(filename):
     file_obj = bucket.Object(filename).get()
-    data = file_obj.read()
+    data = file_obj["Body"].read()
     return base64.b64encode(data).decode()
 
 def delete_file(filename):
