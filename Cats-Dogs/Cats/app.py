@@ -14,6 +14,8 @@ app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER')
 s3 = boto3.resource('s3')
 bucket = s3.Bucket(os.getenv('S3_NAME'))
 
+storage = "s3"
+
 @app.route('/v0/')
 def hello():
     response = 'This is Cats API version v0'
@@ -118,14 +120,14 @@ def update_cat(id):
         elif path == -3:
             return (Response(json.dumps({"error" : "Internal error, try again later"}),status=500, mimetype='application/json'))
 
-    #Retrieve the previous path and delete the file
-    previous_path = cat_utils._get_cat_by_id(id)["file_path"]
+    if storage == "local":
+            #Retrieve the previous path and delete the file
+            previous_path = cat_utils._get_cat_by_id(id)["file_path"]
     result = cat_utils._update_cat(id,data)
 
-    
-
     if result != -1:
-        delete_file(previous_path)
+        if storage == "local":
+            delete_file(previous_path)
 
         #######
         #TODO check if the image was deleted successfully 
@@ -135,7 +137,8 @@ def update_cat(id):
         return (Response(result, status=200, mimetype='application/json'))
     else:
         #Error inserting cat in DB
-        delete_file(path)
+        if storage == "local":
+            delete_file(path)
         return (Response(json.dumps({"error" : "Internal error, try again later"}),status=500, mimetype='application/json'))
 
 
@@ -166,7 +169,7 @@ def delete_cat(id):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def upload_file(file,storage="s3"):
+def upload_file(file):
     if storage == "local":
         return _upload_file_local(file)
     if storage == "s3":
@@ -175,10 +178,8 @@ def _upload_file_local(file):
     # if user does not select file, the browser submits an empty file without filename
     if file.filename == '':
         return -1
-
     if not allowed_file(file.filename):
         return -2
-
     #Check file format and upload
     if file:
         filename = uuid.uuid4().hex + "." + file.filename.rsplit('.', 1)[1].lower()
@@ -187,20 +188,19 @@ def _upload_file_local(file):
     else:
         return -3
 def _upload_file_s3(file):
-    ##########################################
-    # TODO wait for the image to upload???   #
-    ##########################################
+    if file.filename == '':
+        return -1
+    if not allowed_file(file.filename):
+        return -2
 
-    #Upload file temporarily to local storage
-    filename = upload_file(file)
-    if filename != -1 or filename != -2 or filename != -3:
-        #Upload file to S3 and delete temporal file
-        bucket.upload_file(os.path.join(app.config['UPLOAD_FOLDER'], filename),filename)
-        _delete_file_local(filename)
-    else:
+    if file:
+        filename = uuid.uuid4().hex + "." + file.filename.rsplit('.', 1)[1].lower()
+        bucket.Object(filename).put(Body=file)
         return filename
+    else:
+        return -3
 
-def download_file(filename,storage="s3"):
+def download_file(filename):
     if storage == "local":
         return _download_file_local(filename)
     if storage == "s3":
@@ -212,19 +212,11 @@ def _download_file_local(filename):
     data = file.read()
     return base64.b64encode(data).decode()
 def _download_file_s3(filename):
+    file_obj = bucket.Object(filename).get()
+    data = file_obj.read()
+    return base64.b64encode(data).decode()
 
-    ############################################
-    # TODO wait for the image to download???   #
-    ############################################
-
-    #Download temporarily the file to local storage
-    bucket.download_file(filename, os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    #Get local file data and delete temporal file
-    data = _download_file_local(filename)
-    _delete_file_local(filename)
-    return data
-
-def delete_file(filename,storage="s3"):
+def delete_file(filename):
     if storage == "local":
         return _delete_file_local(filename)
     if storage == "s3":
